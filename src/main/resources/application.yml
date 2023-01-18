@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: backend_REST_API
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+mongodb.uri: mongodb://localhost:27017/someDb
