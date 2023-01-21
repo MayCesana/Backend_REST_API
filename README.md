@@ -66,7 +66,7 @@ PUT (update) all the fields of the product with the given ID.  The body should b
     price: string
     category: string ("Shirt", "Pants" or "TankTop")
  }
- ``
+ ```
 
  The response will be a JSON-encoded `Product` object.
 
