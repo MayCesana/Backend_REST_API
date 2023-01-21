@@ -1,33 +1,76 @@
-## Micronaut 3.8.0 Documentation
+# Backend REST API application
 
-- [User Guide](https://docs.micronaut.io/3.8.0/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.8.0/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.8.0/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+This project contains a backend REST API and a Pulumi Dynamic Provider. 
+The backend REST API maintains sets of 2 resource types, blogpost & product.
+I used MongoDB for the database with MonogoDB instance using Docker  
 
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-## Feature data-mongodb documentation
+## Run the app
 
-- [Micronaut Data MongoDB documentation](https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo)
+    unicorn -p 7000
 
-- [https://docs.mongodb.com](https://docs.mongodb.com)
+# REST API
 
+## Resources Types
 
-## Feature http-client documentation
+### `Product`
 
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+```
+{
+    id: number
+    name: string
+    brand: string
+    price: string
+    category: string ("Shirt", "Pants" or "TankTop")
+ }
+ ```
 
+## Endpoints
 
-## Feature test-resources documentation
+### `GET /products`
 
-- [Micronaut Test Resources documentation](https://micronaut-projects.github.io/micronaut-test-resources/latest/guide/)
+Lists the products.  The response will be a JSON array of `Product` objects.
 
+### `GET /products/ids`
 
-## Feature mongo-sync documentation
+Lists the ids of all of the products.  The response will be a JSON array of numbers.
 
-- [Micronaut MongoDB Synchronous Driver documentation](https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html)
+### `POST /products`
 
-- [https://docs.mongodb.com](https://docs.mongodb.com)
+Create a product. you should enter the id of the product (a possitive number) 
+The body should be a JSON object with the structure:
+ 
+ ```
+ {
+    id: number
+    name: string
+    brand: string
+    price: string
+    category: string ("Shirt", "Pants" or "TankTop")
+ }
+ ```
 
+ The response will be a JSON-encoded `Product` object.
+
+### `GET /products/{id}`
+
+Returns the product with the given ID.   The response will be a JSON-encoded `Product` object.
+
+### `PUT /products/{id}`
+
+PUT (update) all the fields of the product with the given ID.  The body should be a JSON object with the given structure:
+ 
+ ```
+ {
+    name: string
+    brand: string
+    price: string
+    category: string ("Shirt", "Pants" or "TankTop")
+ }
+ ``
+
+ The response will be a JSON-encoded `Product` object.
+
+### `DELETE /products/{id}`
+
+Delete the product with the given ID.
 
