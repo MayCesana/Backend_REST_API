@@ -129,7 +129,7 @@ PUT (update) all the fields of the blogpost with the given ID.  The body should 
     category: string ("Shirt", "Pants" or "TankTop")
     products: array of Products
  }
- ``
+ ```
 
  The response will be a JSON-encoded `Blogpost` object.
 
