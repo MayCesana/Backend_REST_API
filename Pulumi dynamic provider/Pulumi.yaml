@@ -1,0 +1,3 @@
+name: pulumi_dynamic_provider
+runtime: nodejs
+description: Zeekit home test
