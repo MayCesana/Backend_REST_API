@@ -74,3 +74,66 @@ PUT (update) all the fields of the product with the given ID.  The body should b
 
 Delete the product with the given ID.
 
+
+### `Blogpost`
+
+```
+{
+    id: number
+    name: string
+    text: string
+    category: string ("Shirt", "Pants" or "TankTop")
+    products: array of Products
+ }
+ ```
+
+## Endpoints
+
+### `GET /blogposts`
+
+Lists the blogposts.  The response will be a JSON array of `Blogpost` objects.
+
+### `GET /blogposts/ids`
+
+Lists the ids of all of the blogposts.  The response will be a JSON array of numbers.
+
+### `POST /blogposts`
+
+Create a blogpost. you should enter the id of the blogpost (a possitive number) 
+The body should be a JSON object with the structure:
+ 
+ ```
+ {
+    id: number
+    name: string
+    text: string
+    category: string ("Shirt", "Pants" or "TankTop")
+    products: array of Products
+ }
+ ```
+
+ The response will be a JSON-encoded `Product` object.
+
+### `GET /products/{id}`
+
+Returns the blogpost with the given ID.   The response will be a JSON-encoded `Blogpost` object.
+
+### `PUT /blogpost/{id}`
+
+PUT (update) all the fields of the blogpost with the given ID.  The body should be a JSON object with the given structure:
+ 
+ ```
+ {
+    name: string
+    text: string
+    category: string ("Shirt", "Pants" or "TankTop")
+    products: array of Products
+ }
+ ``
+
+ The response will be a JSON-encoded `Blogpost` object.
+
+### `DELETE /blogposts/{id}`
+
+Delete the blogpost with the given ID.
+
