@@ -21,26 +21,46 @@ class ProductService (
     fun findAllIds(pageable: Pageable) : List<Long> =
         productRepository.findAll(pageable).map {it.id}
 
-    fun findAllWithFilter(pageable: Pageable, filter: ProductFilterRequest) : List<Product> =
+    fun findAllWithFilter(pageable: Pageable, filter: ProductFilterRequest) : List<Product>
+    {
+        return filter(findByName(pageable, filter.name), findByPrice(pageable, filter.price),
+            findByBrand(pageable,filter.brand), findByCategory(pageable,filter.category.toString()))
+    }
+
+    private fun filter(filteredByName: List<Product>, filteredByPrice: List<Product>, filteredByBrand: List<Product>, filteredByCategory: List<Product>) : List<Product> {
+        var res : Set<Product> = filteredByName.toSet()
+        res  = res.intersect(filteredByBrand)
+        res = res.intersect(filteredByPrice)
+        res = res.intersect(filteredByCategory)
+        return res.toList()
+    }
+
+    private fun findByName (pageable: Pageable, name: String?) : List<Product> =
         when {
-            filter.name !=null -> findByName(pageable, filter.name)
-            filter.brand != null -> findByBrand(pageable, filter.brand)
-            filter.price != null -> findByPrice(pageable, filter.price)
-            filter.category !=null -> findByCategory(pageable, filter.category.toString())
+            name !=null -> productRepository.findByName(pageable, name)
             else -> findAll(pageable)
         }
 
-    private fun findByName (pageable: Pageable, name: String) : List<Product> =
-        productRepository.findByName(pageable, name)
+    private fun findByPrice (pageable: Pageable, price: String?) : List<Product> =
+        when
+        {
+            price != null -> productRepository.findByPrice(pageable, price)
+            else -> findAll(pageable)
+        }
 
-    private fun findByPrice (pageable: Pageable, price: String) : List<Product> =
-        productRepository.findByPrice(pageable, price)
+    private fun findByBrand(pageable: Pageable, brand: String?) : List<Product> =
+        when {
+            brand != null -> productRepository.findByBrand(pageable, brand)
+            else -> findAll(pageable)
+        }
 
-    private fun findByBrand(pageable: Pageable, brand: String) : List<Product> =
-        productRepository.findByBrand(pageable, brand)
-
-    private fun findByCategory(pageable: Pageable, category: String) : List<Product> =
-        productRepository.findByCategory(pageable, category)
+    private fun findByCategory(pageable: Pageable, category: String?) : List<Product> {
+        when {
+            category != null -> productRepository.findByCategory(pageable, category)
+            else -> findAll(pageable)
+        }
+        return findAll(pageable)
+    }
 
     fun getById(id: Long): Product =
         productRepository.findById(id).orElseThrow {
@@ -55,8 +75,10 @@ class ProductService (
     }
 
     fun delete(id: Long) {
-        val product = getById(id)
-        productRepository.delete(product)
+        if(id !=null) {
+            val product = getById(id)
+            productRepository.delete(product)
+        }
     }
 }
 
