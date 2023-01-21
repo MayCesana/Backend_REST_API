@@ -6,9 +6,11 @@ I used MongoDB for the database with MonogoDB instance using Docker
 
 ## Run the app
 
-    unicorn -p 7000
+    gradlew run
 
 # REST API
+
+    base uri: http://localhost:8080
 
 ## Resources Types
 
